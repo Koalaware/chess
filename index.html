@@ -628,18 +628,34 @@
         });
       }
       // 5. INITIALIZE
-      $(document).ready(function() {
-        board = Chessboard('myBoard', {
-          draggable: true,
-          position: 'start',
-          onDragStart: onDragStart,
-          onDrop: onDrop,
-          onSnapEnd: () => board.position(game.fen()),
-          pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
-        });
-        initSpawnDeck();
+$(document).ready(function() {
+
+  board = Chessboard('myBoard', {
+    draggable: true,
+    position: 'start',
+    onDragStart: onDragStart,
+    onDrop: onDrop,
+    onSnapEnd: () => board.position(game.fen()),
+    pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
+  });
+
+  initSpawnDeck();
+
+  fetch("/api/engine")
+    .then(res => res.json())
+    .then(data => {
+      if (data.allowed) {
         initStockfish();
-      });
+      } else {
+        $('#engineText').text("Engine unavailable");
+      }
+    })
+    .catch(() => {
+      $('#engineText').text("Engine unavailable");
+    });
+
+});
+
     </script>
   </body>
 </html>
