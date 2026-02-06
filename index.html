@@ -7,7 +7,7 @@
       const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
       function playSound(type) {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+        if (audioCtx.state === 'suspended') audioCtx.resume();ython -m http.server 8000
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.connect(gain);
